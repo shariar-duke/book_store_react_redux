@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Book from "./Book";
 export default function BookList() {
   const [filterOption, setFilterOption] = useState("all");
   const handleFilter = (option) => {
@@ -23,8 +24,13 @@ export default function BookList() {
           </button>
         </div>
       </div>
-      <div className="max-h-[70vh] overflow-auto">
-        <p>BookItem</p>
+      <div className="max-h-[85vh] overflow-y-auto mt-[30px] grid grid-cols-2 gap-[20px]  pr-[10px]">
+        <Book/>
+        <Book/>
+        <Book/>
+    
+   
+      
       </div>
     </div>
   );
