@@ -1,10 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import fetchBooks from "../redux/books/thunk/fetchBooks";
 import Book from "./Book";
 export default function BookList() {
+  // I want the local state
+  const books = useSelector((state) => state.books);
+  const dispatch = useDispatch();
   const [filterOption, setFilterOption] = useState("all");
   const handleFilter = (option) => {
     setFilterOption(option);
   };
+
+  useEffect(() => {
+    dispatch(fetchBooks);
+  }, [dispatch]);
+
   return (
     <div>
       <div className="flex justify-between">
@@ -35,18 +45,7 @@ export default function BookList() {
 
       <div className="pb-[28px] max-h-[80vh] overflow-y-auto">
         <div className="grid grid-cols-2 gap-[20px] pr-[10px] py-[20px]">
-          <Book />
-          <Book />
-          <Book />
-          <Book />
-          <Book />
-          <Book />
-          <Book />
-          <Book />
-          <Book />
-          <Book />
-          <Book />
-          <Book />
+          {books && books.map((book) => <Book key={book.id} book={book} />)}
         </div>
       </div>
     </div>
