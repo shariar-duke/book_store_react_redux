@@ -17,7 +17,16 @@ export default function BookList({ setEditBook }) {
     dispatch(fetchBooks);
   }, [dispatch]);
 
-  console.log("The search and filter option is", searchAndFilter);
+
+  // filter by bookName 
+
+ console.log("The state and filter is", searchAndFilter?.searchText)
+ const handleFilterByBookName = (book) => {
+    // Always return a boolean: true to include, false to exclude
+    return searchAndFilter.searchText?.length > 0 ? 
+           book.name.toLowerCase().includes(searchAndFilter.searchText.toLowerCase()) : 
+           true;
+  }
 
   return (
     <div>
@@ -50,7 +59,7 @@ export default function BookList({ setEditBook }) {
       <div className="pb-[28px] max-h-[80vh] overflow-y-auto">
         <div className="grid grid-cols-2 gap-[20px] pr-[10px] py-[20px]">
         {books
-            .filter((book) => filterOption ? book.featured : true)
+            .filter((book) => (filterOption ? book.featured : true)).filter(handleFilterByBookName)
             .map((book) => (
               <Book setEditBook={setEditBook} key={book.id} book={book} />
             ))}
