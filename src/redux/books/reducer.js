@@ -1,4 +1,4 @@
-import { ADDED, DELETED, LOADED } from "./actionTypes";
+import { ADDED, DELETED, EDITED, LOADED } from "./actionTypes";
 import { initialState } from "./initialState";
 
 function nextBookId(books) {
@@ -17,6 +17,20 @@ const reducer = (state = initialState, action) => {
         ...action.payload,
         id: nextBookId(state)
       }]
+
+    case EDITED: 
+      return state.map((book) => {
+        if(book.id === action.payload.id) 
+        {
+            return action.payload
+        }
+
+        else 
+        {
+            return book
+        }
+      })
+
 
     case DELETED: 
      return  state.filter((book) => book.id !== action.payload)
