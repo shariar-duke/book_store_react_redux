@@ -1,15 +1,18 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import addBook from "../redux/books/thunk/addBook";
 export default function AddBook() {
   const [state, setState] = useState({
-    bookName: "",
+    name: "",
     author: "",
-    imgUrl: "",
+    thumbnail: "",
     price: "",
     rating: 0,
     featured: false,
   });
 
-  const { bookName, author, imgUrl, price, rating, featured } = state;
+  const { name, author, thumbnail, price, rating, featured } = state;
+    const dispatch = useDispatch()
 
   const handleChange = (e) => {
     const name = e.target.name;
@@ -23,6 +26,9 @@ export default function AddBook() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+     dispatch(addBook(state))
+    console.log("The current state is",state )
+    
   };
   return (
     <div className="max-w-[360px] rounded-md p-[20px] shadow-xl">
@@ -30,7 +36,7 @@ export default function AddBook() {
         <p className="text-center font-bold text-[20px]"> Add New Book </p>
         <div className="mt-[20px]">
           <label
-            htmlFor="bookName"
+            htmlFor="name"
             className="block text-gray-600 font-bold mb-2"
           >
             Book Name
@@ -39,9 +45,9 @@ export default function AddBook() {
             required
             onChange={handleChange}
             type="text"
-            name="bookName"
-            value={bookName}
-            id="bookName"
+            name="name"
+            value={name}
+            id="name"
             className="px-3 py-1 border border-gray-300 rounded focus:outline-none focus:border-black-500 w-full"
           />
         </div>
@@ -67,7 +73,7 @@ export default function AddBook() {
         <div>
           <label
             className="block text-gray-600  font-bold my-2"
-            htmlFor="imgUrl"
+            htmlFor="thumbnail"
           >
             Image Url
           </label>
@@ -75,9 +81,9 @@ export default function AddBook() {
             required
             onChange={handleChange}
             type="text"
-            name="imgUrl"
-            id="imgUrl"
-            value={imgUrl}
+            name="thumbnail"
+            id="thumbnail"
+            value={thumbnail}
             className="px-3 py-1 border border-gray-300 rounded focus:outline-none focus:border-black-500 w-full"
           />
         </div>
