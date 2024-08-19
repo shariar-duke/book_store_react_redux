@@ -3,10 +3,12 @@
 import { FaRegEdit, FaStar } from "react-icons/fa";
 import { IoStarOutline } from "react-icons/io5";
 import { RiDeleteBinLine } from "react-icons/ri";
+import { useDispatch } from "react-redux";
+import deleteBook from "../redux/books/thunk/deleteBooks";
 
 export default function Book({book}) {
 
-    console.log("the single book is", book)
+    const dispatch = useDispatch()
     const { id, author, featured, name, price, rating, thumbnail} = book
     const backgroundImageStyle ={
         backgroundImage: `url(${book?.thumbnail ?? " "})`
@@ -15,6 +17,11 @@ export default function Book({book}) {
 
    let filledStars = Array(rating).fill(0)
    let outlinedStars = Array(Math.max(0, 5-rating)).fill(0)
+
+   const deleteBookHandler =()=> 
+   {
+    dispatch(deleteBook(id))
+   }
 
   return (
     <div className="flex gap-[16px] border border-gray-100 rounded-xl shadow-xl bg-white max-h-[170px]">
@@ -27,7 +34,7 @@ export default function Book({book}) {
           </button>
           <div className="flex gap-[4px]">
             <FaRegEdit className="cursor-pointer" />
-            <RiDeleteBinLine className="cursor-pointer" />
+            <RiDeleteBinLine onClick={deleteBookHandler} className="cursor-pointer" />
           </div>
         </div>
         <div className="flex  items-center h-full ">
