@@ -1,20 +1,23 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import fetchBooks from "../redux/books/thunk/fetchBooks";
+import { filterBook } from "../redux/searchAndFilter/action";
 import Book from "./Book";
 // eslint-disable-next-line react/prop-types
-export default function BookList({setEditBook}) {
-
-  const books = useSelector((state) => state.books) || [];
+export default function BookList({ setEditBook }) {
   const dispatch = useDispatch();
-  const [filterOption, setFilterOption] = useState("all");
+  const [filterOption, setFilterOption] = useState(false);
   const handleFilter = (option) => {
     setFilterOption(option);
+    dispatch(filterBook(option));
   };
-
+  const books = useSelector((state) => state.books) || [];
+  const searchAndFilter = useSelector((state) => state.filters);
   useEffect(() => {
     dispatch(fetchBooks);
   }, [dispatch]);
+
+  console.log("The search and filter option is", searchAndFilter);
 
   return (
     <div>
@@ -22,9 +25,9 @@ export default function BookList({setEditBook}) {
         <p className="font-bold">Book List</p>
         <div className="flex gap-[10px]">
           <button
-            onClick={() => handleFilter("all")}
+            onClick={() => handleFilter(false)}
             className={`${
-              filterOption === "all"
+              filterOption === false
                 ? "bg-[#17B169] text-white"
                 : "bg-white text-gray-700"
             }  border-[1px] border-[#17B169]  rounded-full px-[24px] py-[4px] text-[14px] font-bold `}
@@ -32,9 +35,9 @@ export default function BookList({setEditBook}) {
             All
           </button>
           <button
-            onClick={() => handleFilter("featured")}
+            onClick={() => handleFilter(true)}
             className={`${
-              filterOption === "featured"
+              filterOption === true
                 ? "bg-[#17B169] text-white"
                 : "bg-white text-gray-700"
             } border-[1px] border-[#17B169] rounded-full px-[24px] py-[4px] text-[14px] font-bold `}
@@ -46,7 +49,11 @@ export default function BookList({setEditBook}) {
 
       <div className="pb-[28px] max-h-[80vh] overflow-y-auto">
         <div className="grid grid-cols-2 gap-[20px] pr-[10px] py-[20px]">
-          {books && books.map((book) => <Book setEditBook ={setEditBook} key={book.id} book={book} />)}
+        {books
+            .filter((book) => filterOption ? book.featured : true)
+            .map((book) => (
+              <Book setEditBook={setEditBook} key={book.id} book={book} />
+            ))}
         </div>
       </div>
     </div>
