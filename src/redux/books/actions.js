@@ -1,4 +1,4 @@
-import { ADDED, DELETED, LOADED } from "./actionTypes";
+import { ADDED, DELETED, EDITED, LOADED } from "./actionTypes";
 
 // This is for Load existing data from the server
 
@@ -23,5 +23,13 @@ export const deleted = (bookId) =>
     return {
         type : DELETED,
         payload : bookId
+    }
+}
+
+export const updated = (book) => 
+{
+    return {
+        type :EDITED,
+        payload: book
     }
 }
