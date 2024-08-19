@@ -13,7 +13,7 @@ export default function AddBook({ editBook, setEditBook }) {
     rating: 0,
     featured: false,
   };
-  console.log("The edit book is", editBook);
+
   const [state, setState] = useState(editBook || initialState);
   const [isEditing, setIsEditing] = useState(false);
 
@@ -29,7 +29,7 @@ export default function AddBook({ editBook, setEditBook }) {
     }
   }, [editBook]);
 
-  console.log("The state for editing mode is", state);
+
 
   const { name, author, thumbnail, price, rating, featured } = state;
   const dispatch = useDispatch();
