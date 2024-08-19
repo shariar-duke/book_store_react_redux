@@ -6,7 +6,8 @@ import { RiDeleteBinLine } from "react-icons/ri";
 import { useDispatch } from "react-redux";
 import deleteBook from "../redux/books/thunk/deleteBooks";
 
-export default function Book({book}) {
+export default function Book({book , setEditBook}) {
+
 
     const dispatch = useDispatch()
     const { id, author, featured, name, price, rating, thumbnail} = book
@@ -14,13 +15,23 @@ export default function Book({book}) {
         backgroundImage: `url(${book?.thumbnail ?? " "})`
     }
 
+   console.log("The rating is", rating)
+   const filledStars = Array(Number(rating)).fill(0);
+   const outlinedStars = Array(Number(5 - rating)).fill(0);
+   
 
-   let filledStars = Array(rating).fill(0)
-   let outlinedStars = Array(Math.max(0, 5-rating)).fill(0)
+   console.log("filteredStars are", filledStars)
+   console.log("All the outlineStars are", outlinedStars)
 
    const deleteBookHandler =()=> 
    {
     dispatch(deleteBook(id))
+   }
+
+   const handleBookEdit =() => 
+   {
+    setEditBook(book)
+    console.log("The book I want to edit",book)
    }
 
   return (
@@ -29,11 +40,11 @@ export default function Book({book}) {
       <div className=" flex-1 rounded-md p-[12px]">
         <div className="flex justify-between">
            
-          <button className={` ${featured && "invisible"} text-whtie text-[10px] px-[14px] py-[2px] bg-[#17B169] rounded-full text-white font-bold`}>
+          <button className={` ${!featured && "invisible"} text-whtie text-[10px] px-[14px] py-[2px] bg-[#17B169] rounded-full text-white font-bold`}>
             featured
           </button>
           <div className="flex gap-[4px]">
-            <FaRegEdit className="cursor-pointer" />
+            <FaRegEdit onClick={handleBookEdit} className="cursor-pointer" />
             <RiDeleteBinLine onClick={deleteBookHandler} className="cursor-pointer" />
           </div>
         </div>
@@ -44,12 +55,12 @@ export default function Book({book}) {
             <div className="flex gap-[8px]">
 
                 {
-                    filledStars.map((rating , index) =>  < FaStar size={18} key={index} color="orange"/>
+                  filledStars &&  filledStars.map((rating , index) =>  < FaStar size={18} key={index} color="orange"/>
                     )
                 }
 
 {
-                    outlinedStars.map((rating , index) =>  <IoStarOutline size={18} key={index} color="orange"/>
+                 outlinedStars &&   outlinedStars.map((rating , index) =>  <IoStarOutline size={18} key={index} color="orange"/>
                     )
                 }
                

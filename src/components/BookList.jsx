@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import fetchBooks from "../redux/books/thunk/fetchBooks";
 import Book from "./Book";
-export default function BookList() {
-  // I want the local state
-  const books = useSelector((state) => state.books);
+// eslint-disable-next-line react/prop-types
+export default function BookList({setEditBook}) {
+
+  const books = useSelector((state) => state.books) || [];
   const dispatch = useDispatch();
   const [filterOption, setFilterOption] = useState("all");
   const handleFilter = (option) => {
@@ -45,7 +46,7 @@ export default function BookList() {
 
       <div className="pb-[28px] max-h-[80vh] overflow-y-auto">
         <div className="grid grid-cols-2 gap-[20px] pr-[10px] py-[20px]">
-          {books && books.map((book) => <Book key={book.id} book={book} />)}
+          {books && books.map((book) => <Book setEditBook ={setEditBook} key={book.id} book={book} />)}
         </div>
       </div>
     </div>
