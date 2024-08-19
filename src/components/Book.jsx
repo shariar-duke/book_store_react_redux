@@ -15,13 +15,12 @@ export default function Book({book , setEditBook}) {
         backgroundImage: `url(${book?.thumbnail ?? " "})`
     }
 
-   console.log("The rating is", rating)
+
    const filledStars = Array(Number(rating)).fill(0);
    const outlinedStars = Array(Number(5 - rating)).fill(0);
    
 
-   console.log("filteredStars are", filledStars)
-   console.log("All the outlineStars are", outlinedStars)
+ 
 
    const deleteBookHandler =()=> 
    {
@@ -31,7 +30,7 @@ export default function Book({book , setEditBook}) {
    const handleBookEdit =() => 
    {
     setEditBook(book)
-    console.log("The book I want to edit",book)
+  
    }
 
   return (
