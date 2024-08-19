@@ -1,4 +1,4 @@
-import { LOADED } from "./actionTypes";
+import { ADDED, LOADED } from "./actionTypes";
 
 // This is for Load existing data from the server
 
@@ -9,3 +9,11 @@ export const loaded =(books) =>
         payload:books
     }
 }
+
+export const added =(books) => 
+    {
+        return {
+            type: ADDED, 
+            payload:books
+        }
+    }
