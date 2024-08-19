@@ -1,11 +1,11 @@
 import { FILTERBOOK, SEARCHBOOK } from "./actionTypes";
 
 
-export const searchBook =(bookName)=> 
+export const searchBook =(searchedBook)=> 
 {
     return {
         type: SEARCHBOOK, 
-        payload: bookName
+        payload: searchedBook
     }
 }
 
