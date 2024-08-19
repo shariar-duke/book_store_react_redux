@@ -7,7 +7,10 @@ const reducer =(state = initialState , action) =>
     switch(action.type) 
     {
         case SEARCHBOOK : 
-           return state.filter((book)=> book.name.toLowerCase().includes(action.payload.toLowerCase()))
+           return {
+            ...state, 
+            searchText : action.payload
+           }
 
         
         case FILTERBOOK : 
