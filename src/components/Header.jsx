@@ -1,5 +1,27 @@
+import { useState } from "react";
 import { IoSearch } from "react-icons/io5";
+import { useDispatch } from "react-redux";
+import { searchBook } from "../redux/searchAndFilter/action";
 export default function Header() {
+    const [searchValue, setSearchValue] = useState("")
+     const dispatch = useDispatch()
+
+
+  
+    const handleChange =(e) => 
+    { 
+       const value = e.target.value;
+       setSearchValue(value);
+       if (value.length > 0 || value === "") {
+        dispatch(searchBook(value)); // Dispatch immediately on change
+    }
+    
+    }
+
+
+
+   
+
   return (
     <div className="flex justify-between w-[92%] py-[10px] items-center">
       <div className="text-center">
@@ -15,9 +37,9 @@ export default function Header() {
       </div>
       <div>
        <div className="rounded-full flex justify-center  items-center bg-white px-[8px] ">
-         <input type="text" placeholder="search" className="placeholder:text-[14px] border-none outline-none w-[170px] rounded-full px-[14px] py-[4px]" />
+         <input onChange={handleChange} type="text" placeholder="search" className="placeholder:text-[14px] border-none outline-none w-[170px] rounded-full px-[14px] py-[4px]" />
 
-         <IoSearch size={16} className="text-center text-gray-400 cursor-pointer pr-[2px]"/>
+         <IoSearch  size={16} className="text-center text-gray-400 cursor-pointer pr-[2px]"/>
        </div>
       </div>
     </div>
